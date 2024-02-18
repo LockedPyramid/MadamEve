@@ -79,6 +79,8 @@ async def sell(ctx, *, items):
         print(RepressedItems)
         Call = ApiCaller.Call(None, 2, 90, RepressedItems)
         print(Call)
+        
+        #Feel free to customise this message :)
         await ctx.send(f"""Contract to Yvftu for {Call["Buy"]} ISK""") 
 
 @bot.command(name='see')
@@ -93,4 +95,4 @@ async def see(ctx, *, items):
             await ctx.send("I am a minor you perve!")
 
 # Run the bot with your token
-bot.run(str(open("/home/ada/Janice/Storage/Discord.key").read()))
+bot.run(str(open(settings.DiscordKey).read()))

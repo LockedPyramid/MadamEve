@@ -60,6 +60,8 @@ crokite 10000
 crokite 100000
 ```
 
+## Setting up the bot
+
 -------------
 
 Fly safe o7
