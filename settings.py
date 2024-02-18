@@ -1,4 +1,4 @@
-Debug = False
+debug = False
 Logging = True
 DefaultStation = 2
 DefaultPercent = 100
@@ -11,4 +11,4 @@ AdminWhitelistLocation = "/home/ada/MadamEve/Storage/AdminWhitelist.log"
 StorageLocation = "/home/ada/MadamEve/Storage/"
 RepoJsonLocation = "/home/ada/MadamEve/Storage/Repo.json"
 def Debug(input): 
-    if Debug: print(input)
+    if debug: print(input)

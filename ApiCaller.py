@@ -76,7 +76,7 @@ def Call(user, Market,Percent, InputData):
     except Exception as e:
         if settings.Logging: StorageHandler.LogError(user,input,e)
 
-        if(settings.Debug):
+        if(settings.debug):
             return str(e.args[0])
         else:
             return "Check documentation. if error persists please contact Erold Hareka"

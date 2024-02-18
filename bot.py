@@ -32,7 +32,7 @@ Split: {Call["Split"]}""")
         settings.Debug(e.args[0])
     
 @bot.command(name='Repo')
-async def Price(ctx, Market, MarketPercent, RatePercent, *, items):
+async def Repo(ctx, Market, MarketPercent, RatePercent, *, items):
     
     try:
         RepressedItems = reprocess.Call(ctx, RatePercent, items)
@@ -100,13 +100,13 @@ Split: {Call["Split"]}""")
         
         
 @bot.command(name='Buyback')
-async def Jita(ctx, *, items):
+async def Buyback(ctx, *, items):
     
         
         Call = ApiCaller.Call(None, 2, 90, items)
         settings.Debug(Call)
         
-        #Feel free to customise this message :)
+        #Feel free to customize this message, this is for the buy back program of our corp :)
         await ctx.send(f"""Contract to the corp in Imya NPC station for {Call["Buy"]} ISK""")
 
 
