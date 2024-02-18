@@ -1,4 +1,4 @@
-Debug = True
+Debug = False
 Logging = True
 DefaultStation = 2
 DefaultPercent = 100

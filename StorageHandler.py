@@ -23,9 +23,9 @@ def AddAdmin(name):
     if settings.Debug: print(data)
     
     data.append(name)
-    print(data)
+    if settings.Debug:print(data)
     data = ','.join(data)
-    print(data)
+    if settings.Debug:print(data)
     file = open(settings.AdminWhitelistLocation, "r+")
     file.write(data)
     file.close
@@ -36,9 +36,9 @@ def RemoveAdminList(name):
     if settings.Debug: print(data)
     
     data.append(name)
-    print(data)
+    if settings.Debug:print(data)
     data = ','.join(data)
-    print(data)
+    if settings.Debug:print(data)
     file = open(settings.AdminWhitelistLocation, "r+")
     file.write(data)
 

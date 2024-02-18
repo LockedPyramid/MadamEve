@@ -103,7 +103,7 @@ def Call(user, RepoPercentage, InputData):
         settings.Debug("RepoGot: " + str(RepoGot))
         
         for key in RepoGot.keys():
-            print(RepoGot[key])
+            if settings.Debug:print(RepoGot[key])
             repo_value = int(RepoGot[key]) 
 
             
