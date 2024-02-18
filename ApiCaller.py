@@ -27,7 +27,7 @@ def Call(user, Market,Percent, InputData):
     Buy = 0
     Sell = 0
     Split = 0
-    ApiKey = open("/home/ada/Janice/Storage/Janice.key").read()
+    ApiKey = open(settings.JaniceKey).read()
 
     
     # Pull api data from Janice
