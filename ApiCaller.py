@@ -49,7 +49,7 @@ def Call(user, Market,Percent, InputData):
             
             r = requests.post(url, data=item, headers=headers)
             rToLib = json.loads(json.dumps(r.json()).removeprefix("[").removesuffix("]")) # Turn into Json
-            print(r)
+            settings.Debug(r)
             Amount = str(re.findall(r'\d+', str(item).replace(",",""))).removeprefix("['").removesuffix("']")
             settings.Debug(Amount)
             try:Amount = float(Amount) 
