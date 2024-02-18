@@ -36,7 +36,7 @@ def Call(user, RepoPercentage, InputData):
     Out = []
     Items = str(InputData).split("\n")
     
-    with open("/home/ada/Janice/Storage/Repo.json") as f:
+    with open(settings.RepoJsonLocation) as f:
         Repo = json.loads(str(f.read()).lower())
     
     DictHold = {

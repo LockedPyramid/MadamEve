@@ -9,5 +9,6 @@ JaniceKey = "/home/ada/MadamEve/Storage/Janice.key"
 LogLocation = "/home/ada/MadamEve/Storage/Log.log"
 AdminWhitelistLocation = "/home/ada/MadamEve/Storage/AdminWhitelist.log"
 StorageLocation = "/home/ada/MadamEve/Storage/"
+RepoJsonLocation = "/home/ada/MadamEve/Storage/Repo.json"
 def Debug(input): 
     if Debug: print(input)
