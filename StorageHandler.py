@@ -59,6 +59,8 @@ __________
     
     with open(settings.LogLocation, "a") as myfile:
         myfile.write(log)
+        
+        
 def LogError(user, data, error):
     now = datetime.now()
     log = f""" 

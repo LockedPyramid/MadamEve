@@ -78,14 +78,18 @@ def Call(user, RepoPercentage, InputData):
         }
     
     for item in Items:
-        Amount = GetAmount(item)
+        try:
+            Amount = (GetAmount(item)).split("',")[0]
+        except:
+            Amount = "1"
         ItemName = (str(item.removesuffix(str(Amount))).lower()) # Get item name
+        settings.Debug("Amount:" + str(Amount))
         
         
         
-        match = re.search(r'\d', ItemName)
 
         #Get rid of everything after number
+        match = re.search(r'\d', ItemName)
         if match:
             index_of_first_digit = match.start()
             ItemName = ItemName[:index_of_first_digit]
@@ -109,9 +113,11 @@ def Call(user, RepoPercentage, InputData):
             
             dict_hold_value = int(DictHold[key])
 
-            
-            amount_int = int(Amount)
-
+             
+            try:
+                amount_int = int(Amount)
+            except:
+                amount_int = 1
             
             sum_value = int(((float(repo_value)/100) * amount_int)*(float(RepoPercentage)/100)) + dict_hold_value
 
@@ -124,7 +130,7 @@ def Call(user, RepoPercentage, InputData):
     split_string = Out.split(',')
     result = '\n'.join(split_string)
     Out = result.replace(":","").replace("'","").replace("{","").replace("}","")
-    if settings.Debug: print("---DONE PROCESSING---")
+    if settings.debug: print("---DONE PROCESSING---")
     
     settings.Debug("out: \n"+ Out)
     settings.Debug("-----CLEANING DATA-----")
@@ -132,6 +138,7 @@ def Call(user, RepoPercentage, InputData):
 
     filtered_lines = [line for line in lines if ' 0' not in line]
     Out = '\n'.join(filtered_lines)    
+    settings.Debug("-----ADDING EXECS-----")
     settings.Debug("-----REPO DONE-----")
 
     return Out
