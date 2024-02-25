@@ -18,7 +18,7 @@ bot = commands.Bot(command_prefix='!',intents=intents)
 
 @bot.command(name='Price')
 async def Price(ctx, Market, Percent, *, items):
-    
+    await ctx.send("Processing...")
     if not settings.Safety: 
         Call = ApiCaller.Call(None, Market, Percent, items)
         settings.Debug(Call)
@@ -39,13 +39,14 @@ Sell: {Call["Sell"]}
 Split: {Call["Split"]}""")
     except Exception as e: 
         await ctx.send("An error occurred, please try again")
+        if settings.Logging: StorageHandler.LogError(None, input,e)
         settings.Debug(e.args[0])
     
     
     
 @bot.command(name='Repo')
 async def Repo(ctx, Market, MarketPercent, RatePercent, *, items):
-    
+    await ctx.send("Processing...")
     if not settings.Safety:
         RepressedItems = reprocess.Call(ctx, RatePercent, items)
         await ctx.send(RepressedItems)
@@ -69,6 +70,7 @@ Split: {Call["Split"]}""")
     
     except Exception as e: 
         await ctx.send("An error occurred, please try again")
+        if settings.Logging: StorageHandler.LogError(None, input,e)
         settings.Debug(e.args[0])
 
 
@@ -76,7 +78,7 @@ Split: {Call["Split"]}""")
 
 @bot.command(name='RepoSell')
 async def RepoSell(ctx, Market, MarketPercent, RatePercent, *, items):
-    
+    await ctx.send("Processing...")
     if not settings.Safety:
         RepressedItems = reprocess.Call(ctx, RatePercent, items)
         await ctx.send(RepressedItems)
@@ -91,6 +93,7 @@ async def RepoSell(ctx, Market, MarketPercent, RatePercent, *, items):
         await ctx.send(f"""Sell: {Call["Sell"]}""")
     except Exception as e: 
         await ctx.send(e.args[0])
+        if settings.Logging: StorageHandler.LogError(None, input,e)
         settings.Debug(e.args[0])
     
     
@@ -98,7 +101,7 @@ async def RepoSell(ctx, Market, MarketPercent, RatePercent, *, items):
     
 @bot.command(name='RepoBuy')
 async def RepoBuy(ctx, Market, MarketPercent, RatePercent, *, items):
-    
+    await ctx.send("Processing...")
     if not settings.Safety:
         RepressedItems = reprocess.Call(ctx, RatePercent, items)
         await ctx.send(RepressedItems)
@@ -121,7 +124,7 @@ async def RepoBuy(ctx, Market, MarketPercent, RatePercent, *, items):
 
 @bot.command(name='sell')
 async def sell(ctx, *, items):
-    
+    await ctx.send("Processing...")
     if not settings.Safety:
         RepressedItems = reprocess.Call(ctx, 82.93, str(items).lower())
         settings.Debug(RepressedItems)
@@ -150,7 +153,7 @@ async def sell(ctx, *, items):
 
 @bot.command(name='Jita')
 async def Jita(ctx, *, items):
-    
+        await ctx.send("Processing...")
         if not settings.Safety:
             
         
@@ -165,12 +168,23 @@ Sell: {Call["Sell"]}
 Split: {Call["Split"]}""")
             return
         
-        
+        try:
+            RepressedItems = reprocess.Call(ctx, 82.93, str(items).lower())
+            settings.Debug(RepressedItems)
+            Call = ApiCaller.Call(None, 2, 90, RepressedItems)
+            settings.Debug(Call)
+            
+            #Feel free to customize this message :)
+            await ctx.send(f"""Contract to Yvftu for {Call["Buy"]} ISK""") 
+        except Exception as e:
+            await ctx.send("An error occurred, please try again")
+            if settings.Logging: StorageHandler.LogError(None, input,e)
+            settings.Debug(e.args[0])
         
         
 @bot.command(name='Buyback')
 async def Buyback(ctx, *, items):
-    
+        await ctx.send("Processing...")
         
         Call = ApiCaller.Call(None, 2, 90, items)
         settings.Debug(Call)
