@@ -18,7 +18,7 @@ mineralsList = ["tritanium", "pyerite", "mexallon", "isogen", "nocxium", "zydrin
 
 def GetAmount(input):
     ToReturn = str(re.findall(r'\d+', str(input).replace(",",""))).removeprefix("['").removesuffix("']")
-    if settings.Debug: print(ToReturn)
+    settings.Debug(ToReturn)
     return ToReturn
     
 
@@ -109,7 +109,7 @@ def Call(user, RepoPercentage, InputData):
             settings.Debug("RepoGot: " + str(RepoGot))
 
             for key in RepoGot.keys():
-                if settings.Debug:print(RepoGot[key])
+                if settings.Debug:settings.Debug(RepoGot[key])
                 repo_value = int(RepoGot[key]) 
 
 
@@ -125,7 +125,7 @@ def Call(user, RepoPercentage, InputData):
 
                 DictHold[key] = sum_value
         except:
-            print("Overflowing " + str(item))
+            settings.Debug("Overflowing " + str(item))
             Overflow.append(item)
     
     settings.Debug("OverflowList: " + str(Overflow))
@@ -136,7 +136,7 @@ def Call(user, RepoPercentage, InputData):
     split_string = Out.split(',')
     result = '\n'.join(split_string)
     Out = result.replace(":","").replace("'","").replace("{","").replace("}","")
-    if settings.debug: print("---DONE PROCESSING---")
+    settings.Debug("---DONE PROCESSING---")
     
     settings.Debug("out: \n"+ Out)
     settings.Debug("-----CLEANING DATA-----")
@@ -148,6 +148,29 @@ def Call(user, RepoPercentage, InputData):
     Overflow = '\n'.join(Overflow)
     settings.Debug(Overflow)
     Out = Overflow + '\n' + Out
+    
+    settings.Debug("-----SCRUBBING DATA-----")
+     
+    Hold = str(Out).split("\n")
+    settings.Debug("Cleaning spaces...")
+    CountDracula = 0
+    for data in Hold:
+        CleanTemp = data
+        for i in range(5):
+            CleanTemp = CleanTemp.removeprefix(" ").removesuffix(" ")
+        Hold[CountDracula] = CleanTemp
+        CountDracula += 1
+        settings.Debug(f"from:|{data}| to: |{CleanTemp}|")
+    settings.Debug("Done cleaning spaces")
+    settings.Debug("Cleaning empty data")
+    
+    try: Hold.remove('')
+    except: settings.debug("No empty data")
+    
+    settings.Debug("Compiling data")
+    Hold = '\n'.join(Hold)
+    settings.Debug("Sending to Output")
+    Out = Hold
     settings.Debug("-----REPO DONE-----")
 
     return Out
