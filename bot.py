@@ -131,18 +131,23 @@ async def sell(ctx, *, items):
         Call = ApiCaller.Call(None, 2, 90, RepressedItems)
         settings.Debug(Call)
         
+        await ctx.send(f"""Items Reprocessed and excess items: {RepressedItems}""")
         #Feel free to customize this message :)
         await ctx.send(f"""Contract to Yvftu for {Call["Buy"]} ISK""")
         return
     
     try:
+        
         RepressedItems = reprocess.Call(ctx, 82.93, str(items).lower())
         settings.Debug(RepressedItems)
         Call = ApiCaller.Call(None, 2, 90, RepressedItems)
         settings.Debug(Call)
         
-        #Feel free to customize this message :)
-        await ctx.send(f"""Contract to Yvftu for {Call["Buy"]} ISK""") 
+        embed = discord.Embed(title="Madam Janice")
+        embed.add_field(name="Reprocessed items and excess: ",value=RepressedItems)
+        embed.add_field(name="Contract to Yvftu for",value=str(Call["Buy"])+" ISK")
+        await ctx.send(embed=embed)
+         
     except Exception as e:
         await ctx.send("An error occurred, please try again")
         if settings.Logging: StorageHandler.LogError(None, input,e)
@@ -174,8 +179,17 @@ Split: {Call["Split"]}""")
             Call = ApiCaller.Call(None, 2, 90, RepressedItems)
             settings.Debug(Call)
             
-            #Feel free to customize this message :)
-            await ctx.send(f"""Contract to Yvftu for {Call["Buy"]} ISK""") 
+            EmbedMod = discord.Embed(title="Modifiers")
+            EmbedMod.add_field(name="Market: ",value="Market: Jita")
+            EmbedMod.add_field(name="Percent: ",value="%100")
+            EmbedMod.add_field(name="Volume: ",value=Call["Volume"])
+            await ctx.send(embed=EmbedMod)
+            
+            EmbedPrice = discord.Embed(title="Prices")
+            EmbedPrice.add_field(name="Buy: ",value=round(Call["Buy"], 2))
+            EmbedPrice.add_field(name="Sell: ",value=round(Call["Sell"], 2))
+            EmbedPrice.add_field(name="Split: ",value=round(Call["Split"], 2))
+            await ctx.send(embed=EmbedPrice)
         except Exception as e:
             await ctx.send("An error occurred, please try again")
             if settings.Logging: StorageHandler.LogError(None, input,e)

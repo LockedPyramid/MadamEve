@@ -2,7 +2,7 @@ debug = True
 Logging = True
 DefaultStation = 2
 DefaultPercent = 100
-Safety = False
+Safety = True
 
 #Change these locations to match your system
 DiscordKey = "/home/ada/MadamEve/Storage/Discord.key"

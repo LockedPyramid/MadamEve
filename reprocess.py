@@ -34,6 +34,7 @@ def Call(user, RepoPercentage, InputData):
         string: String to send to user
     """
     Out = []
+    Overflow = []
     Items = str(InputData).split("\n")
     
     with open(settings.RepoJsonLocation) as f:
@@ -79,50 +80,55 @@ def Call(user, RepoPercentage, InputData):
     
     for item in Items:
         try:
-            Amount = (GetAmount(item)).split("',")[0]
-        except:
-            Amount = "1"
-        ItemName = (str(item.removesuffix(str(Amount))).lower()) # Get item name
-        settings.Debug("Amount:" + str(Amount))
-        
-        
-        
-
-        #Get rid of everything after number
-        match = re.search(r'\d', ItemName)
-        if match:
-            index_of_first_digit = match.start()
-            ItemName = ItemName[:index_of_first_digit]
-        
-        #Clean up string
-        Counter = 0
-        while Counter < 20:
-            ItemName = ItemName.removesuffix(" ").removeprefix(" ")
-            Counter += 1
-        ItemName = ItemName.removeprefix("compressed ")
-        settings.Debug("Item Name: " + ItemName)
-        
-        RepoGot = Repo[ItemName] # Get data from repo
-        
-        settings.Debug("RepoGot: " + str(RepoGot))
-        
-        for key in RepoGot.keys():
-            if settings.Debug:print(RepoGot[key])
-            repo_value = int(RepoGot[key]) 
-
-            
-            dict_hold_value = int(DictHold[key])
-
-             
             try:
-                amount_int = int(Amount)
+                Amount = (GetAmount(item)).split("',")[0]
             except:
-                amount_int = 1
-            
-            sum_value = int(((float(repo_value)/100) * amount_int)*(float(RepoPercentage)/100)) + dict_hold_value
+                Amount = "1"
+            ItemName = (str(item.removesuffix(str(Amount))).lower()) # Get item name
+            settings.Debug("Amount:" + str(Amount))
 
-            DictHold[key] = sum_value
-            
+
+
+
+            #Get rid of everything after number
+            match = re.search(r'\d', ItemName)
+            if match:
+                index_of_first_digit = match.start()
+                ItemName = ItemName[:index_of_first_digit]
+
+            #Clean up string
+            Counter = 0
+            while Counter < 20:
+                ItemName = ItemName.removesuffix(" ").removeprefix(" ")
+                Counter += 1
+            ItemName = ItemName.removeprefix("compressed ")
+            settings.Debug("Item Name: " + ItemName)
+
+            RepoGot = Repo[ItemName] # Get data from repo
+
+            settings.Debug("RepoGot: " + str(RepoGot))
+
+            for key in RepoGot.keys():
+                if settings.Debug:print(RepoGot[key])
+                repo_value = int(RepoGot[key]) 
+
+
+                dict_hold_value = int(DictHold[key])
+
+
+                try:
+                    amount_int = int(Amount)
+                except:
+                    amount_int = 1
+
+                sum_value = int(((float(repo_value)/100) * amount_int)*(float(RepoPercentage)/100)) + dict_hold_value
+
+                DictHold[key] = sum_value
+        except:
+            print("Overflowing " + str(item))
+            Overflow.append(item)
+    
+    settings.Debug("OverflowList: " + str(Overflow))
     Out = DictHold.copy()
     settings.Debug("out: " + str(Out))
 
@@ -139,6 +145,9 @@ def Call(user, RepoPercentage, InputData):
     filtered_lines = [line for line in lines if ' 0' not in line]
     Out = '\n'.join(filtered_lines)    
     settings.Debug("-----ADDING EXECS-----")
+    Overflow = '\n'.join(Overflow)
+    settings.Debug(Overflow)
+    Out = Overflow + '\n' + Out
     settings.Debug("-----REPO DONE-----")
 
     return Out
