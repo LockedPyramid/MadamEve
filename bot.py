@@ -143,7 +143,7 @@ async def sell(ctx, *, items):
         
         RepressedItems = reprocess.Call(ctx, 82.93, str(items).lower())
         settings.Debug(RepressedItems)
-        Call = ApiCaller.Call(None, 2, 90, RepressedItems)
+        Call = ApiCaller.Call(ctx.author.name, 2, 90, RepressedItems)
         settings.Debug(Call)
         
         embed = discord.Embed(title="Madam Janice")
@@ -154,7 +154,7 @@ async def sell(ctx, *, items):
          
     except Exception as e:
         await ctx.send("An error occurred, please try again")
-        if settings.Logging: StorageHandler.LogError(None, input,e)
+        if settings.Logging: StorageHandler.LogError(ctx.author.name, input,e)
         settings.Debug(e.args[0])
         await ctx.send("--- %s seconds ---" % (time.time() - start_time))
 
@@ -168,7 +168,7 @@ async def Jita(ctx, *, items):
         if not settings.Safety:
             
         
-            Call = ApiCaller.Call(None, 2, 100, items)
+            Call = ApiCaller.Call(ctx.author.name, 2, 100, items)
             settings.Debug(Call)
         
             #Feel free to customize this message :)
@@ -183,7 +183,7 @@ Split: {Call["Split"]}""")
         try:
             RepressedItems = reprocess.Call(ctx, 82.93, str(items).lower())
             settings.Debug(RepressedItems)
-            Call = ApiCaller.Call(ctx.User, 2, 90, RepressedItems)
+            Call = ApiCaller.Call(ctx.author.name, 2, 90, RepressedItems)
             settings.Debug(Call)
             
             EmbedMod = discord.Embed(title="Modifiers")
@@ -200,7 +200,7 @@ Split: {Call["Split"]}""")
             await ctx.send("--- %s seconds ---" % (time.time() - start_time))
         except Exception as e:
             await ctx.send("An error occurred, please try again")
-            if settings.Logging: StorageHandler.LogError(None, input,e)
+            if settings.Logging: StorageHandler.LogError(ctx.author.name, input,e)
             settings.Debug(e.args[0])
             await ctx.send("--- %s seconds ---" % (time.time() - start_time))
         
