@@ -6,6 +6,7 @@ import reprocess
 import settings
 import random
 import StorageHandler
+import time
 
 # Create an instance of the bot
 intents = discord.Intents.all()
@@ -124,6 +125,7 @@ async def RepoBuy(ctx, Market, MarketPercent, RatePercent, *, items):
 
 @bot.command(name='sell')
 async def sell(ctx, *, items):
+    start_time = time.time()
     await ctx.send("Processing...")
     if not settings.Safety:
         RepressedItems = reprocess.Call(ctx, 82.93, str(items).lower())
@@ -134,6 +136,7 @@ async def sell(ctx, *, items):
         await ctx.send(f"""Items Reprocessed and excess items: {RepressedItems}""")
         #Feel free to customize this message :)
         await ctx.send(f"""Contract to Yvftu for {Call["Buy"]} ISK""")
+        await ctx.send("--- %s seconds ---" % (time.time() - start_time))
         return
     
     try:
@@ -147,17 +150,20 @@ async def sell(ctx, *, items):
         embed.add_field(name="Reprocessed items and excess: ",value=RepressedItems)
         embed.add_field(name="Contract to Yvftu for",value=str(Call["Buy"])+" ISK")
         await ctx.send(embed=embed)
+        await ctx.send("--- %s seconds ---" % (time.time() - start_time))
          
     except Exception as e:
         await ctx.send("An error occurred, please try again")
         if settings.Logging: StorageHandler.LogError(None, input,e)
         settings.Debug(e.args[0])
+        await ctx.send("--- %s seconds ---" % (time.time() - start_time))
 
 
 
 
 @bot.command(name='Jita')
 async def Jita(ctx, *, items):
+        start_time = time.time()
         await ctx.send("Processing...")
         if not settings.Safety:
             
@@ -171,12 +177,13 @@ async def Jita(ctx, *, items):
 Buy: {Call["Buy"]}
 Sell: {Call["Sell"]}
 Split: {Call["Split"]}""")
+            await ctx.send("--- %s seconds ---" % (time.time() - start_time))
             return
         
         try:
             RepressedItems = reprocess.Call(ctx, 82.93, str(items).lower())
             settings.Debug(RepressedItems)
-            Call = ApiCaller.Call(None, 2, 90, RepressedItems)
+            Call = ApiCaller.Call(ctx.User, 2, 90, RepressedItems)
             settings.Debug(Call)
             
             EmbedMod = discord.Embed(title="Modifiers")
@@ -190,10 +197,12 @@ Split: {Call["Split"]}""")
             EmbedPrice.add_field(name="Sell: ",value=round(Call["Sell"], 2))
             EmbedPrice.add_field(name="Split: ",value=round(Call["Split"], 2))
             await ctx.send(embed=EmbedPrice)
+            await ctx.send("--- %s seconds ---" % (time.time() - start_time))
         except Exception as e:
             await ctx.send("An error occurred, please try again")
             if settings.Logging: StorageHandler.LogError(None, input,e)
             settings.Debug(e.args[0])
+            await ctx.send("--- %s seconds ---" % (time.time() - start_time))
         
         
 @bot.command(name='Buyback')

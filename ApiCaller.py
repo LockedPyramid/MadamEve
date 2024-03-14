@@ -79,5 +79,5 @@ def Call(user, Market,Percent, InputData):
          else: return "NOTICE: Your data is wrong, please try again"
     if settings.debug: print("ToSend = " + str(ToSend))
     
-    StorageHandler.LogData(None,ToSend["Buy"],ToSend["Sell"], ToSend["Split"], data)
+    StorageHandler.LogData(user,ToSend["Buy"],ToSend["Sell"], ToSend["Split"], data)
     return (ToSend)
