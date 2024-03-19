@@ -148,7 +148,7 @@ async def sell(ctx, *, items):
         
         embed = discord.Embed(title="Madam Janice")
         embed.add_field(name="Reprocessed items and excess: ",value=RepressedItems)
-        embed.add_field(name="Contract to Yvftu for",value=str(Call["Buy"])+" ISK")
+        embed.add_field(name="Contract to Amarr Mining and Investments Inc for",value=str(Call["Buy"])+" ISK")
         await ctx.send(embed=embed)
         await ctx.send("--- %s seconds ---" % (time.time() - start_time))
          
